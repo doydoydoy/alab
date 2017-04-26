@@ -27,6 +27,8 @@ Route::get('/thread/{id}', 'ThreadsController@index');
 
 Route::get('/thread/new/{section_route}', 'ThreadsController@showCreateThreadPage');
 
+Route::get('/profile/{username}', 'ProfilesController@index');
+
 /*
 * Admin Routes
 */
@@ -47,3 +49,19 @@ Route::post('/admin/delete/section/{section_id}', 'SectionsController@delete');
 
 // Threads Manipulation
 Route::post('/new/thread/{section_route}', 'ThreadsController@create');
+
+Route::post('/edit/thread/{thread_id}', 'ThreadsController@edit');
+
+Route::post('/delete/thread/{thread_id}', 'ThreadsController@delete');
+
+// Post Manipulation
+Route::post('/new/post/{thread_id}', 'PostsController@create');
+
+Route::post('/edit/post/{post_id}', 'PostsController@showEdit');
+
+Route::post('/edit/post/{post_id}/save', 'PostsController@edit');
+
+Route::post('/delete/post/{post_id}', 'PostsController@delete');
+
+// Message Manipulation
+// Route::get('message/')

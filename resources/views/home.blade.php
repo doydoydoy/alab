@@ -160,8 +160,8 @@
                     <div class="col-xs-5 full-mobile">
                         <span><a href='{{ url("section/".$subject->route) }}'>{{ $subject->name }}</a></span>
                         <span class="block"><small>{{ $subject->content }}</small></span>
-                        <span class="indicators"><i class="fa fa-comments-o" aria-hidden="true" title="Messages"></i><small>&nbsp;{{ $post_count[$section->id] }}</small></span>
-                        <span class="indicators"><i class="fa fa-wpforms" aria-hidden="true" title="Discussions"></i><small>&nbsp;{{ $thread_count[$section->id] }}</small></span>
+                        <span class="indicators"><i class="fa fa-comments-o" aria-hidden="true" title="Messages"></i><small>&nbsp;{{ $post_count[$subject->id] }}</small></span>
+                        <span class="indicators"><i class="fa fa-wpforms" aria-hidden="true" title="Discussions"></i><small>&nbsp;{{ $thread_count[$subject->id] }}</small></span>
                         @if(!Auth::guest() && Auth::user()->role == 'admin')
                             <input type="button" data-toggle="modal" data-target="#edit-section-modal{{$subject->id}}" class="btn btn-xs btn-info" value="Edit"  name="" style="color: white">
                             <input type="button" data-toggle="modal" data-target="#delete-section-modal{{$subject->id}}" class="btn btn-xs btn-warning" value="Delete"  name="" style="color: white">

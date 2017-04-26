@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Section;
 use App\Post;
 use App\Thread;
+use App\User;
+use Auth;
 use Session;
 
 class SectionsController extends Controller
@@ -76,8 +78,6 @@ class SectionsController extends Controller
         $section->content = $request->section_content;
         $section->route = $request->section_route;
         $section->save();
-
-        // echo $section_id;
 
         Session::flash('message', 'Successfully Edited Section');
         return redirect('/');

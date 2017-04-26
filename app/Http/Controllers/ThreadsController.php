@@ -9,6 +9,7 @@ use App\Post;
 use App\Thread;
 use App\Section;
 use Carbon\Carbon;
+use Session;
 
 class ThreadsController extends Controller
 {
@@ -70,4 +71,28 @@ class ThreadsController extends Controller
 
     	return redirect('/thread/'.$thread_id);
     }
+
+    public function edit($id, Request $request)
+    {
+    	$thread = Thread::find($id);
+    	$thread->content = $request->thread_title;
+    	$thread->save();
+
+    	Session::flash('message', 'Successfully Edited Thread');
+    	return redirect('/thread/'.$id);
+   }
+
+    public function delete($id, Request $request)
+    {
+    	$thread = Thread::find($id);
+    	$section = $thread->section_id;
+    	$section = Section::find($section);
+    	
+    	Thread::destroy($id);
+
+    	Session::flash('message', 'Successfully Removed Thread');
+    	return redirect('/section/'.$section->route);	
+    }
+
+
 }

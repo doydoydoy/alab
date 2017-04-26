@@ -37,7 +37,7 @@
 
         #banner
         {
-            background: #708090; 
+            background: #2F4F4F; 
             display: none; 
             color: #fff;
             padding-top: 15px;
@@ -148,6 +148,12 @@
         footer
         {
             margin-bottom: 30px;
+        }
+
+        .profile-menu
+        {
+            padding: 5px;
+            border-bottom: 1px solid #d3e0e9;
         }
 
         @media screen and (max-width: 992px)
@@ -289,12 +295,12 @@
 
     <div id="app">
         <div class="container">
-            <div style="background: url(http://www.erenikiz.com/wp-content/uploads/2016/03/2119436.jpg) center/cover no-repeat; height: 150px; position: relative; color: white; border: 1px solid transparent" class="text-center">
-                <h1 style="font-family: 'Permanent Marker', cursive; color: white; font-size: 5vw; opacity: 0.9;">Alab</h1>
-                <h2 style="font-size: 2vw; font-family: 'Permanent Marker', cursive; opacity: 0.8;">n. Aral Laboratory</h2>
+            <div style="background: url(https://audiokelas.com/wp-content/uploads/2017/04/Audio-Ruang-Kelas-Kampus1.jpg) bottom/cover no-repeat; height: 150px; position: relative; color: white; border: 1px solid transparent" class="text-center">
+                {{-- <h1 style="font-family: 'Permanent Marker', cursive; color: white; font-size: 50px; opacity: 0.9;">Alab</h1>
+                <h2 style="font-size: 2vw; font-family: 'Permanent Marker', cursive; opacity: 0.8;">n. Aral Laboratory</h2> --}}
             </div>
 
-            <nav class="navbar navbar-default navbar-static-top">
+            <nav class="navbar navbar-default navbar-static-top" style="border-color: crimson;">
                 <div class="navbar-header">
 
                     <!-- Collapsed Hamburger -->
@@ -306,7 +312,7 @@
                     </button>
 
                     <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
+                    <a class="navbar-brand" href="{{ url('/') }}" style="color: crimson; font-weight: bold;">
                         {{ config('app.name', 'Laravel') }}
                     </a>
                 </div>
@@ -328,7 +334,7 @@
                             @endif
                             <li><a href="{{ route('register') }}">Register</a></li>
                         @else
-                            <li><a href="#"><span>{{ Auth::user()->username }}</span></a></li>
+                            <li><a href="{{ url('profile/'.Auth::user()->username) }}"><span>{{ Auth::user()->username }}</span></a></li>
 
                             <li class="dropdown">
                                 
@@ -338,7 +344,7 @@
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
-                                    <li><a href="#">Profile</a></li>
+                                    <li><a href="{{ url('/profile/'.Auth::user()->username ) }}">Profile</a></li>
                                     <li><a href="#">Messages</a></li>
                                     <li><a href="#">Settings</a></li>
                                     @if(Auth::user()->role == 'admin')
@@ -385,8 +391,9 @@
         </div>
 
         <footer class="container">
-            <div style="background: firebrick; height: 30px;">
-                
+            <div style="background: firebrick; height: 30px; color: white; font-size: 12px;">
+                <span class="pull-right" style="line-height: 30px; padding-right: 5px;">| &copy; Alab.com</span>
+                <span class="pull-right" style="line-height: 30px; padding-right: 5px;">Design by: JLD</span>
             </div>
         </footer>
     </div>
@@ -438,9 +445,32 @@
                   height: 300,                 // set editor height
                   minHeight: 300,             // set minimum height of editor
                   maxHeight: 300,             // set maximum height of editor
-                  focus: true                  // set focus to editable area after initializing summernote
+                  focus: false                  // set focus to editable area after initializing summernote
             });
 
+            $('#summernote-thread').summernote(
+            {
+                  height: 250,                 // set editor height
+                  minHeight: 250,             // set minimum height of editor
+                  maxHeight: 1000,             // set maximum height of editor
+                  focus: false                  // set focus to editable area after initializing summernote
+            });
+
+            $('#summernote-post').summernote(
+            {
+                  height: 200,                 // set editor height
+                  minHeight: 200,             // set minimum height of editor
+                  maxHeight: 1000,             // set maximum height of editor
+                  focus: false                  // set focus to editable area after initializing summernote
+            });
+
+            $('#summernote-edit').summernote(
+            {
+                  height: 400,                 // set editor height
+                  minHeight: 400,             // set minimum height of editor
+                  maxHeight: 1000,             // set maximum height of editor
+                  focus: false                  // set focus to editable area after initializing summernote
+            });
         });
 
     </script>

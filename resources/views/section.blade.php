@@ -2,9 +2,18 @@
 
 @section('content')
 
+
 <div class="text-center" style="margin-top: 20px; margin-bottom: 20px;">
 	<h3>{{$curr_section[0]->name}}</h3>
 </div>
+
+@if(Session::has('message'))
+    <div class="alert alert-success alert-dismissable">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <span>{{ Session::get('message') }}</span>
+    </div>
+@endif
+
 
 @if(!Auth::guest())
 <div style="position: relative; height: 30px; padding-right: 15px; margin-bottom: 10px;">
@@ -53,9 +62,65 @@
                     <span style="font-size: 80%"> {{ date('M j Y g:i:s A', strtotime($thread->thread_update_date)) }}</span>
                 </span>
             </span>
-            @if(Auth::user()->id == $thread->id || Auth::user()->role == 'admin')
-                <input type="button" class="btn btn-xs btn-info" name="" value="Edit">
-                <input type="button" class="btn btn-xs btn-warning" name="" value="Delete">
+            @if(!Auth::guest() && Auth::user()->role == 'admin')
+                <input type="button" class="btn btn-xs btn-info" name="" value="Edit" data-toggle="modal" data-target="#edit-thread-modal{{ $thread->thread_id }}">
+                <input type="button" class="btn btn-xs btn-warning" name="" value="Delete" data-toggle="modal" data-target="#delete-thread-modal{{ $thread->thread_id }}">
+
+                <!-- Edit Thread Modal -->
+                <div id="edit-thread-modal{{ $thread->thread_id }}" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content" style="color: #636b6f;">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Change Thread Name</h4>
+                            </div>
+                            <form method="POST" action="{{ url('edit/thread/'.$thread->thread_id) }}">
+                            {{ csrf_field() }}
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label>Thread Name:</label>
+                                        <input type="text" class="form-control" name="thread_title" value="{{$thread->content}}">
+                                    </div>
+                                    <input type="submit" class="btn btn-success" value="Modify">
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {{-- End Edit Thread Modal --}}
+
+                <!-- Delete Thread Modal -->
+                <div id="delete-thread-modal{{ $thread->thread_id }}" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content" style="color: #636b6f;">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Delete Thread</h4>
+                            </div>
+                            <form method="POST" action="{{ url('delete/thread/'.$thread->thread_id) }}">
+                                {{ csrf_field() }}
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label>Do you want to delete {{$thread->name}} thread?</label>
+                                        <input type="submit" class="btn btn-danger pull-right" value="Delete">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Go Back</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {{-- End Delete Thread Modal --}}
             @endif
         </div>
         <div class="text-center col-sm-2 hide-768px">
