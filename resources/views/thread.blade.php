@@ -3,19 +3,18 @@
 @section('content')
 
 
+@if(Session::has('message'))
+    <div class="alert alert-success alert-dismissable">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <span>{{ Session::get('message') }}</span>
+    </div>
+@endif
 
-<div>
-
-    @if(Session::has('message'))
-        <div class="alert alert-success alert-dismissable">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <span>{{ Session::get('message') }}</span>
-        </div>
-    @endif
+<div style="border: 1px solid crimson; border-radius: 3px; padding: 10px 5px; margin-bottom: 10px">
 
 
-    <h3 style="display: inline-block; margin-top: 0;">Title: <small>{{ $thread->content }}</small></h3>
-    @if(!Auth::guest() && Auth::user()->id == $thread->author_id)
+    <h3 style="display: inline-block; margin: 0;">Title: <small>{{ $thread->content }}</small></h3>
+    @if(!Auth::guest() && (Auth::user()->id == $thread->author_id  || Auth::user()->role == 'admin'))
         {{-- <input type="button" class="btn btn-danger btn-xs pull-right glyphicon glyphicon-trash" style="margin-left: 5px"> --}}
         <button type="button" class="btn btn-danger btn-sm pull-right" style="margin-left: 5px;" data-toggle='modal' data-target="#delete-thread-modal" title="Delete Thread"><span class="glyphicon glyphicon-trash"></span></button>
         <button type="button" class="btn btn-default btn-sm pull-right" style="margin-left: 5px;" data-toggle='modal' data-target="#edit-thread-modal" title="Edit Thread Title"><span class="glyphicon glyphicon-pencil"></span></button>

@@ -8,17 +8,25 @@ use App\Section;
 use App\Thread;
 use Auth;
 use Session;
-
+use Carbon\Carbon;
 
 class PostsController extends Controller
 {
     public function create($id, Request $request)
     {
+    	$date_time = Carbon::now();
+
     	$post = new Post();
     	$post->content = $request->content;
     	$post->author_id = Auth::user()->id;
     	$post->thread_id = $id;
+    	$post->created_at = $date_time;
+    	$post->updated_at = $date_time;
     	$post->save();
+
+    	$thread = Thread::find($id);
+    	$thread->updated_at = $date_time;
+    	$thread->save();
 
     	return redirect('/thread/'.$id);
     }

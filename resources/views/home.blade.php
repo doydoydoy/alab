@@ -241,8 +241,8 @@
                         <span class="block"><small>Discussions</small></span>
                     </div>
                     <div class="col-sm-3 latest">
-                        <span>Latest: Opening of Alab.com</span>
-                        <span class="block"><small>Johndoy, April 19, 2017</small></span>
+                        <span>Latest: {{ $latest_thread[$subject->id] }}</span>
+                            <span class="block"><small>{{-- {{ User::find()}},  --}}{{  date('M j Y g:i:s A', strtotime($latest_date[$subject->id])) }}</small></span>
                     </div>
                 </div>
                 @endforeach
@@ -334,8 +334,8 @@
                             <span class="block"><small>Discussions</small></span>
                         </div>
                         <div class="col-sm-3 latest">
-                            <span>Latest: Opening of Alab.com</span>
-                            <span class="block"><small>Johndoy, April 19, 2017</small></span>
+                            <span>Latest: {{ $latest_thread[$section->id] }}</span>
+                            <span class="block"><small>{{-- Johndoy,  --}}{{  date('M j Y g:i:s A', strtotime($latest_date[$section->id])) }}</small></span>
                         </div>
                     </div>
                     @endif

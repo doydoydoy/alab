@@ -33,7 +33,9 @@ class HomeController extends Controller
         $subjects = Section::where('category_id', '=', '2')->orderby('name', 'asc')->get();
         $threads = Thread::all();
         $posts = Post::all();
-        $thread_count = [];
+        $thread_count = []; 
+        $post_count = [];
+
 
         // $crumbs = ['name', route];
         $crumbs = ['Forums' => ''];
@@ -42,6 +44,8 @@ class HomeController extends Controller
         {
             $tcount = 0;
             $pcount = 0;
+            $t_latest_date = '';
+            $t_latest_content = '';
             foreach($threads as $thread)
             {
                 if($thread->section_id == $section->id)
@@ -53,14 +57,31 @@ class HomeController extends Controller
                         {
                             $pcount++;
                         }
+
                     }
+
+                    if($t_latest_date == '')
+                    {
+                        $t_latest_date = $thread->updated_at;
+                        $t_latest_content = $thread->content;
+                    }
+                    elseif($t_latest_date<= $thread->updated_at)
+                    {
+                        $t_latest_date = $thread->updated_at;
+                        $t_latest_content = $thread->content;
+                    }
+
                 }
+
+
 
             }
             $thread_count[$section->id] = $tcount;
             $post_count[$section->id] = $pcount;
+            $latest_date[$section->id] = $t_latest_date;
+            $latest_thread[$section->id] = $t_latest_content;
         }
 
-        return view('home', compact('categories', 'subjects', 'sections', 'thread_count', 'post_count', 'crumbs'));
+        return view('home', compact('categories', 'subjects', 'sections', 'thread_count', 'post_count', 'crumbs', 'latest_thread', 'latest_date'));
     }
 }
